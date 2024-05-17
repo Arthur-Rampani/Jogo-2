@@ -15,16 +15,16 @@ class Obstaculo:
         self.pos_x = x_inicial
         self.pos_y = y_inicial
 
-        self.velocidade = random.randint(1, 20)
+        self.velocidade = random.randint(1, 8)
 
         self.mascara = pygame.mask.from_surface(self.imagem)
     
 
     def movimenta(self):
         self.pos_y = self.pos_y + self.velocidade
-        if self.pos_y < -200:
-            self.pos_y = 850
-            self.velocidade = random.randint(10, 20)
+        if self.pos_y > 500:
+            self.pos_y = -self.velocidade
+            #self.velocidade = random.randint(10, 20)
 
     def desenhar(self, tela):
         tela.blit(self.imagem,(self.pos_x,self.pos_y))

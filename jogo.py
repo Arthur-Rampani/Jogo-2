@@ -1,4 +1,5 @@
 import pygame
+import random
 from personagem import Personagem
 from obstaculo import Obstaculo
 
@@ -16,25 +17,8 @@ FUNDO = pygame.transform.scale(FUNDO,(800,500))
 jogador1 = Personagem("imagens/duende_verde.png",80,50,300,450)
 #jogador2 = Personagem("imagens/aranha.png",50,50,450,450)
 
-lista_aranha = [Obstaculo("imagens/aranha.png",50,50,10,10),
-               Obstaculo("imagens/aranha.png",50,50,850,120),
-               Obstaculo("imagens/aranha.png",50,50,850,185),
-               Obstaculo("imagens/aranha.png",50,50,850,265),
-               Obstaculo("imagens/aranha.png",50,50,850,330),
-               Obstaculo("imagens/aranha.png",50,50,850,400),
-               Obstaculo("imagens/aranha.png",50,50,850,60),
-               Obstaculo("imagens/aranha.png",50,50,850,120),
-               Obstaculo("imagens/aranha.png",50,50,850,185),
-               Obstaculo("imagens/aranha.png",50,50,850,265),
-               Obstaculo("imagens/aranha.png",50,50,850,330),
-               Obstaculo("imagens/aranha.png",50,50,850,400),
-               Obstaculo("imagens/aranha.png",50,50,850,60),
-               Obstaculo("imagens/aranha.png",50,50,850,120),
-               Obstaculo("imagens/aranha.png",50,50,850,185),
-               Obstaculo("imagens/aranha.png",50,50,850,265),
-               Obstaculo("imagens/aranha.png",50,50,850,330),
-               Obstaculo("imagens/aranha.png",50,50,850,400)]
-
+lista_aranha = lista_aranha = [Obstaculo("imagens/aranha.png", 20, 20, random.randint(0, 750), random.randint(-500, 0)) for _ in range(18)]
+lista_bombinha = [Obstaculo("imagens/bombinha.png", 20, 20, random.randint(0, 750), random.randint(-500, 0)) for _ in range(10)]
 
 
 #Configurando a fonte
@@ -63,6 +47,10 @@ while rodando:
     for aranha in lista_aranha:
         aranha.movimenta()
         aranha.desenhar(tela)
+        
+    for bombinha in lista_bombinha:
+        bombinha.movimenta()
+        bombinha.desenhar(tela)
 
 
 
