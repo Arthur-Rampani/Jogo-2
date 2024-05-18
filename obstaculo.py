@@ -15,7 +15,7 @@ class Obstaculo:
         self.pos_x = x_inicial
         self.pos_y = y_inicial
 
-        self.velocidade = random.randint(1, 8)
+        self.velocidade = random.randint(1, 3)
 
         self.mascara = pygame.mask.from_surface(self.imagem)
     
