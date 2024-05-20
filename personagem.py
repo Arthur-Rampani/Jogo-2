@@ -16,6 +16,8 @@ class Personagem:
         self.mascara = pygame.mask.from_surface(self.imagem)
 
         self.pontuacao = 0
+        self.vidas = 5
+        self.poderes = 3
 
 
     def desenhar(self, tela):
@@ -33,3 +35,7 @@ class Personagem:
         if teclas[direita]:
             if self.pos_x < 800-self.largura:
                 self.pos_x = self.pos_x + 5
+    def usar_poder(self):
+        if self.poderes > 0:
+            self.vidas += 1
+            self.poderes -= 1

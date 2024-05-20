@@ -5,7 +5,6 @@ from obstaculo import *
 
 pygame.init()
 pontuação = 0
-vidas = 5
 
 #Constrindo a tela
 tela = pygame.display.set_mode((800,500))
@@ -41,6 +40,9 @@ while rodando:
             print("Você clicou!!")
         if evento.type == pygame.QUIT:
             rodando = False
+        if evento.type == pygame.KEYDOWN:
+            if evento.key == pygame.K_SPACE:
+                jogador1.usar_poder()
 
     tela.blit(FUNDO,(0,0))
     #Desenhando as imagens
@@ -55,9 +57,8 @@ while rodando:
             jogador1.pos_x = 300
             jogador1.pos_y = 450
             aranha.pos_y = 500
-            vidas = vidas -1
-            if vidas == 0:
-                exit()
+            jogador1.pontuacao -= 1
+            jogador1.vidas -= 1
         
     for bombinha in lista_bombinha:
         bombinha.movimenta()
@@ -65,13 +66,13 @@ while rodando:
         
         if jogador1.mascara.overlap(bombinha.mascara, (bombinha.pos_x - jogador1.pos_x, bombinha.pos_y - jogador1.pos_y)):
             jogador1.pontuacao += 1
+            jogador1.pontuacao += 1
             bombinha.pos_y = 500
-            if pontuação == 50:
-                print("Você ganhou!")
-                exit()
         
     texto_pontuacao = fonte.render(f'Pontuação: {jogador1.pontuacao}', True, (245, 7, 7))
-    texto_vidas = fonte.render(f'Vidas: {vidas}', True, (245, 7, 7))
+    texto_vidas = fonte.render(f'Vidas: {jogador1.vidas}', True, (245, 7, 7))
+    texto_poderes = fonte.render(f'Aperte espaço para usar, poderes: {jogador1.poderes}', True, (245, 7, 7))
+    tela.blit(texto_poderes, (10, 34))
     tela.blit(texto_pontuacao, (10, 10))
     tela.blit(texto_vidas, (10, 21))
 
