@@ -31,6 +31,12 @@ fonte2 = pygame.font.SysFont("Arial Black",14)
 clock = pygame.time.Clock()
 
 
+# Carregar e iniciar música de fundo
+pygame.mixer.music.load('musica_homem_aranha.mp3')
+pygame.mixer.music.play(-1)
+
+# Carregar som da bombinha
+som_bombinha = pygame.mixer.Sound('risada_duende.mp3')
 
 rodando = True
 while rodando:
@@ -70,10 +76,11 @@ while rodando:
             jogador1.pontuacao += 1
             jogador1.pontuacao += 1
             bombinha.pos_y = 500
+            som_bombinha.play()
             if jogador1.pontuacao == 50:
                 exit()
         
-    texto_pontuacao = fonte.render(f'Pontuação: {jogador1.pontuacao}', True, (245, 7, 7))
+    texto_pontuacao = fonte.render(f'Chegue nos 50 pontos, sua Pontuação: {jogador1.pontuacao}', True, (245, 7, 7))
     texto_vidas = fonte.render(f'Vidas: {jogador1.vidas}', True, (245, 7, 7))
     texto_poderes = fonte.render(f'Aperte espaço para usar, poderes: {jogador1.poderes}', True, (245, 7, 7))
     tela.blit(texto_poderes, (10, 34))
