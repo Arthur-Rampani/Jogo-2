@@ -59,6 +59,8 @@ while rodando:
             aranha.pos_y = 500
             jogador1.pontuacao -= 1
             jogador1.vidas -= 1
+            if jogador1.vidas == 0:
+                exit()
         
     for bombinha in lista_bombinha:
         bombinha.movimenta()
@@ -68,6 +70,8 @@ while rodando:
             jogador1.pontuacao += 1
             jogador1.pontuacao += 1
             bombinha.pos_y = 500
+            if jogador1.pontuacao == 50:
+                exit()
         
     texto_pontuacao = fonte.render(f'Pontuação: {jogador1.pontuacao}', True, (245, 7, 7))
     texto_vidas = fonte.render(f'Vidas: {jogador1.vidas}', True, (245, 7, 7))
