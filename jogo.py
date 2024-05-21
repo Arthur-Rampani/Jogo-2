@@ -13,6 +13,8 @@ tela.fill((129,245,66))
 
 FUNDO = pygame.image.load("imagens/nova_york.png")
 FUNDO = pygame.transform.scale(FUNDO,(800,500))
+imagem_fim = pygame.image.load("imagens/fim_jogo.jpg")
+imagem_fim = pygame.transform.scale(imagem_fim,(800,500))
 
 #Criando mais personagens
 jogador1 = Personagem("imagens/duende_verde.png",80,50,300,450)
@@ -37,10 +39,9 @@ pygame.mixer.music.play(-1)
 
 # Carregar som da bombinha
 som_bombinha = pygame.mixer.Sound('risada_duende.mp3')
-
+fim_jogo = False
 rodando = True
 while rodando:
-    #Tratando eventos
     for evento in pygame.event.get():
         if evento.type == pygame.MOUSEBUTTONDOWN:
             print("Você clicou!!")
@@ -49,43 +50,46 @@ while rodando:
         if evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_SPACE:
                 jogador1.usar_poder()
+    if fim_jogo == True:
+        tela.blit(imagem_fim,(0,0))
+    else:
+        #Tratando eventos
 
-    tela.blit(FUNDO,(0,0))
-    #Desenhando as imagens
-    jogador1.movimentar_via_controle(pygame.K_UP,pygame.K_DOWN,pygame.K_RIGHT,pygame.K_LEFT)
-    jogador1.desenhar(tela)
-    
-    for aranha in lista_aranha:
-        aranha.movimenta()
-        aranha.desenhar(tela)
+
+        tela.blit(FUNDO,(0,0))
+        #Desenhando as imagens
+        jogador1.movimentar_via_controle(pygame.K_UP,pygame.K_DOWN,pygame.K_RIGHT,pygame.K_LEFT)
+        jogador1.desenhar(tela)
         
-        if jogador1.mascara.overlap(aranha.mascara, (aranha.pos_x - jogador1.pos_x, aranha.pos_y - jogador1.pos_y)):
-            jogador1.pos_x = 300
-            jogador1.pos_y = 450
-            aranha.pos_y = 500
-            jogador1.pontuacao -= 1
-            jogador1.vidas -= 1
-            if jogador1.vidas == 0:
-                exit()
-        
-    for bombinha in lista_bombinha:
-        bombinha.movimenta()
-        bombinha.desenhar(tela)
-        
-        if jogador1.mascara.overlap(bombinha.mascara, (bombinha.pos_x - jogador1.pos_x, bombinha.pos_y - jogador1.pos_y)):
-            jogador1.pontuacao += 1
-            jogador1.pontuacao += 1
-            bombinha.pos_y = 500
-            som_bombinha.play()
-            if jogador1.pontuacao == 50:
-                exit()
-        
-    texto_pontuacao = fonte.render(f'Chegue nos 50 pontos, sua Pontuação: {jogador1.pontuacao}', True, (245, 7, 7))
-    texto_vidas = fonte.render(f'Vidas: {jogador1.vidas}', True, (245, 7, 7))
-    texto_poderes = fonte.render(f'Aperte espaço para usar, poderes: {jogador1.poderes}', True, (245, 7, 7))
-    tela.blit(texto_poderes, (10, 34))
-    tela.blit(texto_pontuacao, (10, 10))
-    tela.blit(texto_vidas, (10, 21))
+        for aranha in lista_aranha:
+            aranha.movimenta()
+            aranha.desenhar(tela)
+            
+            if jogador1.mascara.overlap(aranha.mascara, (aranha.pos_x - jogador1.pos_x, aranha.pos_y - jogador1.pos_y)):
+                jogador1.pos_x = 300
+                jogador1.pos_y = 450
+                aranha.pos_y = 500
+                jogador1.vidas -= 1
+                if jogador1.vidas == 0:
+                    fim_jogo = True
+            
+        for bombinha in lista_bombinha:
+            bombinha.movimenta()
+            bombinha.desenhar(tela)
+            
+            if jogador1.mascara.overlap(bombinha.mascara, (bombinha.pos_x - jogador1.pos_x, bombinha.pos_y - jogador1.pos_y)):
+                jogador1.pontuacao += 1
+                bombinha.pos_y = 500
+                som_bombinha.play()
+                if jogador1.pontuacao == 50:
+                    fim_jogo = True
+            
+        texto_pontuacao = fonte.render(f'Chegue nos 50 pontos, sua Pontuação: {jogador1.pontuacao}', True, (245, 7, 7))
+        texto_vidas = fonte.render(f'Vidas: {jogador1.vidas}', True, (245, 7, 7))
+        texto_poderes = fonte.render(f'Aperte espaço para usar, poderes: {jogador1.poderes}', True, (245, 7, 7))
+        tela.blit(texto_poderes, (10, 34))
+        tela.blit(texto_pontuacao, (10, 10))
+        tela.blit(texto_vidas, (10, 21))
 
 
 
